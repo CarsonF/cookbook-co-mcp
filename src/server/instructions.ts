@@ -1,7 +1,10 @@
+import { DEFAULT_LIST } from '../tools/shopping/shared.js';
+import type { Config } from './config.js';
+
 /** The server's instructions for the agent; read-only mode appends a note. */
-export function serverInstructions(readOnly: boolean, defaultList: string) {
-  const text = instructions(defaultList);
-  return readOnly ? `${text}\n${READ_ONLY_NOTE}` : text;
+export function serverInstructions(config: Config) {
+  const text = instructions(config.defaultShoppingList ?? DEFAULT_LIST);
+  return config.readOnly ? `${text}\n${READ_ONLY_NOTE}` : text;
 }
 
 const READ_ONLY_NOTE =
