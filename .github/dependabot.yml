@@ -8,6 +8,10 @@ updates:
       prefix: fix
       prefix-development: chore
       include: scope
+    ignore:
+      # types follow the oldest supported Node (engines >=22)
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     groups:
       minor-and-patch:
         applies-to: version-updates
