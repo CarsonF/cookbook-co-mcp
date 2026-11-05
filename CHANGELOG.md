@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.1.0...v0.2.0) (2026-11-05)
+
+
+### Features
+
+* make the default shopping list configurable ([#8](https://github.com/CarsonF/cookbook-co-mcp/issues/8)) ([b235aca](https://github.com/CarsonF/cookbook-co-mcp/commit/b235aca8c170f4772c03d6313c2f544f4154e13c))
+
 ## [0.1.0](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.0.2...v0.1.0) (2026-11-05)
 
 
