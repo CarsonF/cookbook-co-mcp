@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.2.0...v0.2.1) (2026-11-05)
+
+
+### Bug Fixes
+
+* report the package version from the MCP server ([#10](https://github.com/CarsonF/cookbook-co-mcp/issues/10)) ([601694a](https://github.com/CarsonF/cookbook-co-mcp/commit/601694a89202b20734adaa09415c4957f4350262))
+
 ## [0.2.0](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.1.0...v0.2.0) (2026-11-05)
 
 
