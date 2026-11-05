@@ -1,0 +1,3 @@
+# install scripts are not needed: esbuild ships its binary as an optional dependency
+allowBuilds:
+  esbuild: false

@@ -1,0 +1,42 @@
+{
+  "name": "cookbook-co-mcp",
+  "version": "0.0.1",
+  "description": "Unofficial MCP server for CookBook Co. (placeholder release)",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "cookbook",
+    "recipes",
+    "meal-planner",
+    "shopping-list"
+  ],
+  "homepage": "https://github.com/CarsonF/cookbook-co-mcp#readme",
+  "bugs": "https://github.com/CarsonF/cookbook-co-mcp/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarsonF/cookbook-co-mcp.git"
+  },
+  "license": "MIT",
+  "author": "Carson Full <carson@full.family>",
+  "type": "module",
+  "bin": {
+    "cookbook-mcp": "dist/cookbook-mcp.js"
+  },
+  "files": [
+    "dist/cookbook-mcp.js"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "bundle": "esbuild src/index.ts --bundle --platform=node --format=esm --banner:js=\"import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\" --loader:.ttf=base64 --outfile=dist/cookbook-mcp.js",
+    "test": "pnpm bundle && node --test \"test/**/*.test.ts\"",
+    "prepack": "pnpm bundle"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.7.0"
+  }
+}
