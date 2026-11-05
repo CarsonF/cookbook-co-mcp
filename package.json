@@ -30,7 +30,7 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "bundle": "esbuild src/index.ts --bundle --platform=node --format=esm --banner:js=\"import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\" --loader:.ttf=base64 --outfile=dist/cookbook-mcp.js",
+    "bundle": "node scripts/bundle.ts",
     "test": "pnpm bundle && node --test \"test/**/*.test.ts\"",
     "prepack": "pnpm bundle"
   },

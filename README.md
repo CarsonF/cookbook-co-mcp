@@ -89,7 +89,7 @@ Its banner defines `require`, because firebase's gRPC dependency is CommonJS and
 
 ## Client configuration
 
-Register it with your MCP client over stdio (swap in `node /path/to/cookbook-mcp.js` for a release asset):
+Register it with your MCP client over stdio:
 
 ```json
 {
@@ -237,8 +237,8 @@ from the first read after a long gap, and is there for the next one.
   The server's instructions ask the agent to build them from the recipe id, so tool output stays lean.
   The Android app's own `comappcookbook://recipe/<id>` link works in a browser,
   but some chat clients do not launch custom schemes, so it is not used.
-- Shopping: "Shopping List" is the default list, and staples such as water, salt and pepper
-  are skipped when adding a recipe, and reported.
+- Shopping: the default list is "Shopping List", or the one named by `COOKBOOK_DEFAULT_SHOPPING_LIST`.
+  Staples such as water, salt and pepper are skipped when adding a recipe, and reported.
 
 ## Development
 
@@ -272,7 +272,8 @@ and the photo and nutrition table.
 `src/pdf/fonts/` is embedded into the bundle,
 so PDF export needs `pnpm bundle` and does not work from `tsc` output.
 
-When dependencies change, run `scripts/update-pnpm-hash.sh` to refresh the Nix package's pnpm hash.
+`nix develop` installs a pre-commit hook that refreshes the Nix package's pnpm hash when the lockfile changes;
+without it, run `scripts/update-pnpm-hash.sh`.
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Disclaimer

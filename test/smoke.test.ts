@@ -1,5 +1,6 @@
 import { type ChildProcess, spawn } from 'node:child_process';
 import { once } from 'node:events';
+import { readFileSync } from 'node:fs';
 import { request } from 'node:http';
 import { createServer } from 'node:net';
 import { after, before, describe, it } from 'node:test';
@@ -29,6 +30,14 @@ describe('HTTP server', () => {
     const names = await listTools(server.port);
     assert.equal(names.length, READ_TOOLS);
     assert.ok(!names.includes('delete_recipe'));
+  });
+
+  it('reports the package version', async () => {
+    const server = await start({});
+    servers.push(server);
+    const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+    const { _meta } = await discover(server.port);
+    assert.equal(_meta['io.modelcontextprotocol/serverInfo'].version, version);
   });
 
   it('names the default shopping list in the instructions', async () => {
@@ -114,12 +123,18 @@ async function listTools(port: number): Promise<string[]> {
   return result.tools.map((t) => t.name);
 }
 
-async function instructions(port: number): Promise<string> {
+interface Discovery {
+  instructions: string;
+  _meta: { 'io.modelcontextprotocol/serverInfo': { version: string } };
+}
+
+async function discover(port: number): Promise<Discovery> {
   const res = await rpc(port, 'server/discover');
   assert.equal(res.status, 200);
-  const { result } = (await res.json()) as { result: { instructions: string } };
-  return result.instructions;
+  return ((await res.json()) as { result: Discovery }).result;
 }
+
+const instructions = async (port: number) => (await discover(port)).instructions;
 
 function rpc(port: number, method: string, headers: Record<string, string> = {}) {
   return fetch(`http://127.0.0.1:${port}/mcp`, {

@@ -21,6 +21,7 @@ stdenv.mkDerivation (finalAttrs: {
       ../pnpm-lock.yaml
       ../pnpm-workspace.yaml
       ../tsconfig.json
+      ../scripts/bundle.ts
       ../src
     ];
   };

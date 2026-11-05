@@ -18,7 +18,7 @@ export function createServerFactory(log: (message: string) => void) {
   };
   const create = () => {
     const server = new McpServer(
-      { name: 'cookbook', version: '0.1.0' },
+      { name: 'cookbook', version: __VERSION__ },
       { instructions: serverInstructions(config) },
     );
     registerTools(server, context);
