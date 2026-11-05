@@ -6,6 +6,7 @@ An MCP server for the [CookBook recipe manager](https://cookbookmanager.com) by 
 
 This release is a placeholder.
 The server itself is not published yet.
+Follow progress at [github.com/CarsonF/cookbook-co-mcp](https://github.com/CarsonF/cookbook-co-mcp).
 
 ## License
 
