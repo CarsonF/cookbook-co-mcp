@@ -8,6 +8,7 @@ on:
 permissions:
   contents: read
 
+# one release run at a time, so overlapping pushes cannot merge or publish twice
 concurrency:
   group: release
 
@@ -27,7 +28,7 @@ jobs:
         uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
       # a PR labeled "auto-release" merges the release PR right away, then re-dispatches
       # because merges made with GITHUB_TOKEN do not trigger a push run
-      - name: Release now
+      - name: Release now if the merged PR is labeled auto-release
         if: github.event_name == 'push' && steps.release.outputs.release_created != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
