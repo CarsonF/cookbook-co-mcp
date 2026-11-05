@@ -25,5 +25,5 @@ Commit messages (or squash-merged PR titles) follow [Conventional Commits](https
 A bot keeps one release PR open with the version bump and changelog.
 Merging it tags the release, attaches the bundle to the GitHub Release and publishes to npm.
 
-Add the `release` label to a PR before merging it to release as soon as it lands.
+Add the `auto-release` label to a PR before merging it to release as soon as it lands.
 Without the label, changes batch up in the release PR until it is merged.
