@@ -24,8 +24,8 @@ export const setItemAisle = defineTool({
     list,
     remember: z.boolean().default(true).describe('Also remember this aisle for future adds'),
   },
-  run: async ({ items: queries, aisle, list: ref, remember }, { client }) => {
-    const found = await resolveList(client, ref);
+  run: async ({ items: queries, aisle, list: ref, remember }, { client, config }) => {
+    const found = await resolveList(client, ref, config.defaultShoppingList);
     if ('error' in found) return fail(found.error);
     const all = await client.shopping.items(found.id);
 

@@ -26,8 +26,8 @@ export function itemActionTool(options: {
         ),
       list,
     },
-    run: async ({ items: queries, list: ref }, { client }) => {
-      const found = await resolveList(client, ref);
+    run: async ({ items: queries, list: ref }, { client, config }) => {
+      const found = await resolveList(client, ref, config.defaultShoppingList);
       if ('error' in found) return fail(found.error);
       const all = await client.shopping.items(found.id);
 

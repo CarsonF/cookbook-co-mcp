@@ -36,9 +36,9 @@ export const addPlannedMealsToShoppingList = defineTool({
   },
   run: async (
     { from, to, list: ref, on_hand: extra, include_staples: staples, aisles, apply: go },
-    { client },
+    { client, config },
   ) => {
-    const found = await resolveList(client, ref);
+    const found = await resolveList(client, ref, config.defaultShoppingList);
     if ('error' in found) return fail(found.error);
     const [planned, recipes] = await Promise.all([
       client.mealPlan.list(from, to, true),

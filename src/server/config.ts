@@ -17,6 +17,8 @@ export interface Config {
   backupDir: string;
   /** Edit backups kept per recipe. */
   backupKeep: number;
+  /** Shopping list used when a tool is given none; unset means "Shopping List". */
+  defaultShoppingList?: string;
   cache: CacheSettings;
 }
 
@@ -33,6 +35,7 @@ export function loadConfig(env = process.env, home = homedir()): Config {
       : [join(home, 'Downloads'), join(state, 'exports')],
     backupDir: env.COOKBOOK_BACKUP_DIR ?? join(state, 'backups'),
     backupKeep: Math.max(1, Number(env.COOKBOOK_BACKUP_KEEP ?? 20) || 20),
+    defaultShoppingList: env.COOKBOOK_DEFAULT_SHOPPING_LIST?.trim() || undefined,
     cache: loadCacheSettings(env),
   };
 }

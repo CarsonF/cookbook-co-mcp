@@ -125,6 +125,7 @@ unsupported-protocol-version error that names the supported version.
 | `COOKBOOK_TOKEN` | Required. The login token copied from the web app. |
 | `COOKBOOK_READ_ONLY` | Set to `1` to register only the read tools. |
 | `COOKBOOK_PORT` | Port for `serve` (or pass it as `serve <port>`). |
+| `COOKBOOK_DEFAULT_SHOPPING_LIST` | Shopping list used when a tool is given none. Default `Shopping List`. |
 | `COOKBOOK_BACKUP_DIR` | Where recipe backups go. Default `~/.local/state/cookbook-mcp/backups`. |
 | `COOKBOOK_BACKUP_KEEP` | Edit backups kept per recipe. Default 20. |
 | `COOKBOOK_EXPORT_DIR` | Where exports go when no path is given. Default `~/Downloads`, else `~/.local/state/cookbook-mcp/exports`. |

@@ -17,8 +17,8 @@ export const getShoppingList = defineTool({
     ids: z.boolean().default(false).describe('Return each item as {id, text} instead of text'),
     show_done: z.boolean().default(false).describe('List the checked-off items, not just a count'),
   },
-  run: async ({ list: ref, ids, show_done }, { client }) => {
-    const found = await resolveList(client, ref);
+  run: async ({ list: ref, ids, show_done }, { client, config }) => {
+    const found = await resolveList(client, ref, config.defaultShoppingList);
     if ('error' in found) return fail(found.error);
     const items = await client.shopping.items(found.id);
     const order = Object.values(AISLES);
