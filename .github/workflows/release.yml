@@ -3,9 +3,13 @@ name: Release
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: release
 
 jobs:
   release-please:
@@ -14,12 +18,27 @@ jobs:
       contents: write
       pull-requests: write
       issues: write
+      actions: write
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - id: release
         uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+      # a PR labeled "release" merges the release PR right away, then re-dispatches
+      # because merges made with GITHUB_TOKEN do not trigger a push run
+      - name: Release now
+        if: github.event_name == 'push' && steps.release.outputs.release_created != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          labeled=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
+            --jq '[.[].labels[].name] | index("release") != null')
+          [ "$labeled" = true ] || exit 0
+          pr=$(gh pr list --label 'autorelease: pending' --state open --json number --jq '.[0].number // empty')
+          [ -n "$pr" ] || exit 0
+          gh pr merge "$pr" --squash
+          gh workflow run release.yml --ref main
 
   # tags made with GITHUB_TOKEN do not trigger workflows, so publishing lives in this workflow
   publish:
