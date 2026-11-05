@@ -32,6 +32,7 @@ jobs:
         if: github.event_name == 'push' && steps.release.outputs.release_created != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
           labeled=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
             --jq '[.[].labels[].name] | index("auto-release") != null')
