@@ -31,6 +31,18 @@ describe('HTTP server', () => {
     assert.ok(!names.includes('delete_recipe'));
   });
 
+  it('names the default shopping list in the instructions', async () => {
+    const server = await start({});
+    servers.push(server);
+    assert.match(await instructions(server.port), /"Shopping List" is the default list/);
+  });
+
+  it('uses COOKBOOK_DEFAULT_SHOPPING_LIST as the default list', async () => {
+    const server = await start({ COOKBOOK_DEFAULT_SHOPPING_LIST: 'Groceries' });
+    servers.push(server);
+    assert.match(await instructions(server.port), /"Groceries" is the default list/);
+  });
+
   it('refuses a foreign Host header', async () => {
     const server = await start({});
     servers.push(server);
@@ -100,6 +112,13 @@ async function listTools(port: number): Promise<string[]> {
   assert.equal(res.status, 200);
   const { result } = (await res.json()) as { result: { tools: { name: string }[] } };
   return result.tools.map((t) => t.name);
+}
+
+async function instructions(port: number): Promise<string> {
+  const res = await rpc(port, 'server/discover');
+  assert.equal(res.status, 200);
+  const { result } = (await res.json()) as { result: { instructions: string } };
+  return result.instructions;
 }
 
 function rpc(port: number, method: string, headers: Record<string, string> = {}) {

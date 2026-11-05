@@ -23,7 +23,10 @@ export function overrideMap(entries: { item: string; aisle: string }[]): Map<str
   return new Map(entries.map((e) => [normalizeName(e.item), aisleId(e.aisle)!]));
 }
 
-export const list = z.string().optional().describe('List name or id; defaults to "Shopping List"');
+export const list = z
+  .string()
+  .optional()
+  .describe('List name or id; defaults to the default list (marked by list_shopping_lists)');
 
 export const on_hand = z
   .array(z.string())
@@ -40,11 +43,27 @@ export const apply = z
   .default(false)
   .describe('false previews only; true makes the change');
 
-export const DEFAULT_LIST = 'shopping list';
+export const DEFAULT_LIST = 'Shopping List';
+
+/**
+ * The list used when a tool is given none.
+ * A configured name must match; the built-in name may fall back to the only other list.
+ */
+export function findDefaultList<T extends { id: string; name: string }>(
+  lists: T[],
+  configured?: string,
+): T | undefined {
+  const key = (configured ?? DEFAULT_LIST).toLowerCase();
+  const match = lists.find((l) => l.id === configured || l.name.toLowerCase() === key);
+  if (match || configured) return match;
+  const others = lists.filter((l) => l.id !== 'common');
+  return others.length === 1 ? others[0] : undefined;
+}
 
 export async function resolveList(
   client: CookbookClient,
-  ref?: string,
+  ref: string | undefined,
+  configured?: string,
 ): Promise<{ id: string; name: string } | { error: string }> {
   const lists = await client.shopping.lists();
   const names = lists.map((l) => l.name).join(', ');
@@ -61,11 +80,9 @@ export async function resolveList(
           : `"${ref}" matches several lists (${partial.map((l) => l.name).join(', ')}); use the full name`,
     };
   }
-  const byName = lists.find((l) => l.name.toLowerCase() === DEFAULT_LIST);
-  if (byName) return byName;
-  const others = lists.filter((l) => l.id !== 'common');
-  if (others.length === 1) return others[0];
-  return { error: `No "Shopping List" found; pass \`list\`. Lists: ${names}` };
+  const found = findDefaultList(lists, configured);
+  if (found) return found;
+  return { error: `No "${configured ?? DEFAULT_LIST}" found; pass \`list\`. Lists: ${names}` };
 }
 
 export async function applyPlan(client: CookbookClient, listId: string, plan: Plan): Promise<void> {

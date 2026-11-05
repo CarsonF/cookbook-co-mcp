@@ -31,8 +31,8 @@ export const addToShoppingList = defineTool({
       .describe('Items to add; the same name and unit as an open item adds to its quantity'),
     list,
   },
-  run: async ({ items, list: ref }, { client }) => {
-    const found = await resolveList(client, ref);
+  run: async ({ items, list: ref }, { client, config }) => {
+    const found = await resolveList(client, ref, config.defaultShoppingList);
     if ('error' in found) return fail(found.error);
     const lines: Line[] = items.map((i) => ({
       name: i.name.trim(),

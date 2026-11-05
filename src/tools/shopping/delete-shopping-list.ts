@@ -15,8 +15,8 @@ export const deleteShoppingList = defineTool({
     name: z.string().describe("The list's current name, to confirm"),
     apply,
   },
-  run: async ({ list: ref, name, apply: go }, { client }) => {
-    const found = await resolveList(client, ref);
+  run: async ({ list: ref, name, apply: go }, { client, config }) => {
+    const found = await resolveList(client, ref, config.defaultShoppingList);
     if ('error' in found) return fail(found.error);
     if (found.id === 'common') return fail('The built-in "Regular items" list cannot be deleted');
     if (found.name.toLowerCase() !== name.toLowerCase()) {

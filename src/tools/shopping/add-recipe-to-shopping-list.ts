@@ -36,9 +36,9 @@ export const addRecipeToShoppingList = defineTool({
   },
   run: async (
     { recipe_id, servings, list: ref, on_hand: extra, include_staples: staples, aisles, apply: go },
-    { client },
+    { client, config },
   ) => {
-    const found = await resolveList(client, ref);
+    const found = await resolveList(client, ref, config.defaultShoppingList);
     if ('error' in found) return fail(found.error);
     const recipe = (await client.recipes.list()).find((r) => r.id === recipe_id);
     if (!recipe) return fail(`No recipe with id ${recipe_id}`);

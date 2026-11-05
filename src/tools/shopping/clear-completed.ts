@@ -8,8 +8,8 @@ export const clearCompleted = defineTool({
     'Delete every checked-off item from a shopping list. The open items stay. This cannot be undone.',
   hints: ['destructive', 'idempotent'],
   inputSchema: { list },
-  run: async ({ list: ref }, { client }) => {
-    const found = await resolveList(client, ref);
+  run: async ({ list: ref }, { client, config }) => {
+    const found = await resolveList(client, ref, config.defaultShoppingList);
     if ('error' in found) return fail(found.error);
     const done = (await client.shopping.items(found.id)).filter((i) => i.complete);
     await client.shopping.deleteItems(
