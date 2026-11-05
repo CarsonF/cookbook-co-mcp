@@ -1,6 +1,6 @@
 {
   "name": "cookbook-co-mcp",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Unofficial MCP server for CookBook Co.: recipes, tags, meal planner and shopping lists",
   "keywords": [
     "mcp",
