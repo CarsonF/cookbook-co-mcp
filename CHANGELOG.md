@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.2.1...v0.2.2) (2026-11-06)
+
+
+### Bug Fixes
+
+* stop installing bundled dependencies with the npm package ([#12](https://github.com/CarsonF/cookbook-co-mcp/issues/12)) ([94fcc84](https://github.com/CarsonF/cookbook-co-mcp/commit/94fcc84faebcd6554111b0348b6d6105afeb03a0))
+
 ## [0.2.1](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.2.0...v0.2.1) (2026-11-05)
 
 
