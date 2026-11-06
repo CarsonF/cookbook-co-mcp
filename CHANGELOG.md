@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.3](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.2.2...v0.2.3) (2026-11-06)
+
+
+### Dependencies
+
+* bump remeda from 2.57.0 to 2.58.0 ([#17](https://github.com/CarsonF/cookbook-co-mcp/issues/17)) ([7cdab49](https://github.com/CarsonF/cookbook-co-mcp/commit/7cdab49ced71593467483ce4192c99dfcd4561e5))
+* upgrade pdfmake to 0.3 and migrate PDF export ([#15](https://github.com/CarsonF/cookbook-co-mcp/issues/15)) ([d160bac](https://github.com/CarsonF/cookbook-co-mcp/commit/d160bac4234e42433ae7b6bffe14353dbe89d4a1))
+
 ## [0.2.2](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.2.1...v0.2.2) (2026-11-06)
 
 
