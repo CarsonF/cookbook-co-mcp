@@ -22,6 +22,7 @@ stdenv.mkDerivation (finalAttrs: {
       ../pnpm-workspace.yaml
       ../tsconfig.json
       ../scripts/bundle.ts
+      ../scripts/bundle-options.ts
       ../src
     ];
   };
