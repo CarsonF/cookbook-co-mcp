@@ -5,9 +5,8 @@ updates:
     schedule:
       interval: weekly
     commit-message:
-      prefix: fix
-      prefix-development: chore
-      include: scope
+      # every dependency is bundled, so a bump changes what ships
+      prefix: deps
     ignore:
       # types follow the oldest supported Node (engines >=22)
       - dependency-name: '@types/node'
