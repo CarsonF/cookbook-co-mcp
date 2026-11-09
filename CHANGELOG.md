@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.2.3...v0.2.4) (2026-11-09)
+
+
+### Bug Fixes
+
+* send a Content-Length with photo uploads ([#18](https://github.com/CarsonF/cookbook-co-mcp/issues/18)) ([d8eddd7](https://github.com/CarsonF/cookbook-co-mcp/commit/d8eddd78c8f9e37ae2fb00ed7ff6da0abaa4f4c7))
+
 ## [0.2.3](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.2.2...v0.2.3) (2026-11-06)
 
 
