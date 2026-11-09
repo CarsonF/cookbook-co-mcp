@@ -27,8 +27,12 @@ export class ImagesApi {
     for (const [name, value] of Object.entries(data)) form.append(name, String(value));
     // S3 requires the file to be the last field
     form.append('file', new Blob([new Uint8Array(bytes)]), `upload.${ext}`);
+    // S3 rejects chunked bodies (HTTP 411), so buffer the form to send an explicit Content-Length
+    const encoded = new Response(form);
+    const body = Buffer.from(await encoded.arrayBuffer());
     const res = await this.http.post(url, {
-      body: form,
+      body,
+      headers: { 'content-type': encoded.headers.get('content-type') ?? '' },
       responseType: 'text',
       timeout: { request: TRANSFER_TIMEOUT_MS },
       ...retryPost,
