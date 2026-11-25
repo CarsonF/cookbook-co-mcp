@@ -154,13 +154,13 @@ Example: `COOKBOOK_CACHE_RECIPES_FRESH=10s COOKBOOK_CACHE_TAGS_REFRESH_EVERY=off
 
 ## Tools
 
-40 tools.
+43 tools.
 Agents also receive short usage instructions from the server when they connect.
 
 | Area | Tools |
 | --- | --- |
-| Find and read | `search_recipes`, `get_recipe`, `get_recent_recipes`, `list_tags`, `scale_recipe` |
-| Edit a recipe | `update_recipe`, `rename_recipe`, `set_tags`, `set_favourite`, `rate_recipe`, `mark_cooked`, `set_recipe_photo`, `delete_recipe` |
+| Find and read | `search_recipes`, `get_recipe`, `get_recent_recipes`, `get_step_photo`, `list_tags`, `scale_recipe` |
+| Edit a recipe | `update_recipe`, `rename_recipe`, `set_tags`, `set_favourite`, `rate_recipe`, `mark_cooked`, `set_recipe_photo`, `set_step_photo`, `remove_step_photo`, `delete_recipe` |
 | Add a recipe | `create_recipe`, `import_recipe_from_url`, `import_recipe_file` |
 | Share | `export_recipe` (a `.cookbook` file or a PDF), `share_recipe_link` (a public link) |
 | Tags | `create_tag`, `rename_tag`, `delete_tag` |

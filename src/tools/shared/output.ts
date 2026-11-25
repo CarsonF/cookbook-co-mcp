@@ -31,6 +31,12 @@ export function jsonWithText(value: unknown, keys: string[]) {
   return { content: [JSON.stringify(body), ...blocks].map(textBlock) };
 }
 
+/** An image as a tool result, with a caption. */
+export function image(bytes: Uint8Array, mimeType: string, caption: string) {
+  const data = Buffer.from(bytes).toString('base64');
+  return { content: [textBlock(caption), { type: 'image' as const, data, mimeType }] };
+}
+
 export function fail(message: string) {
   return { isError: true, content: [textBlock(message)] };
 }

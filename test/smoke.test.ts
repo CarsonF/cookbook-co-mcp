@@ -8,8 +8,8 @@ import assert from 'node:assert/strict';
 
 const BUNDLE = new URL('../dist/cookbook-mcp.js', import.meta.url).pathname;
 const PROTOCOL = '2026-07-28';
-const READ_TOOLS = 9;
-const ALL_TOOLS = 40;
+const READ_TOOLS = 10;
+const ALL_TOOLS = 43;
 
 describe('HTTP server', () => {
   const servers: Server[] = [];

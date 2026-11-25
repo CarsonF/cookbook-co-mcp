@@ -26,7 +26,7 @@ export function leanRecipe(recipe: Recipe, tags: string[]) {
     cookcount: recipe.cookcount,
     lastcook: recipe.lastcook,
     photo: !PLACEHOLDER_PHOTOS.includes(recipe.displayphoto),
-    stepPhotos: recipe.instructions.filter((s) => s.photo).length,
+    stepPhotos: recipe.instructions.flatMap((s, i) => (s.photo ? [i + 1] : [])),
     ingredients: recipe.ingredients.map(leanIngredient),
     instructions: recipe.instructions.map((s) => s.text),
   });
