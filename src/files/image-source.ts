@@ -28,6 +28,16 @@ export async function readImage(source: string) {
   return { bytes, ext };
 }
 
+/** The image type from its magic bytes, if it is a jpg, png or webp. */
+export function sniffImage(bytes: Uint8Array): 'jpg' | 'png' | 'webp' | undefined {
+  if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) return 'jpg';
+  if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47) {
+    return 'png';
+  }
+  const riff = Buffer.from(bytes.subarray(0, 12)).toString('latin1');
+  return riff.startsWith('RIFF') && riff.endsWith('WEBP') ? 'webp' : undefined;
+}
+
 //#region helpers
 async function download(url: URL) {
   assertPublicHost(url);
@@ -56,14 +66,6 @@ async function download(url: URL) {
     if (tooLarge) throw new Error('Image is larger than 15 MB');
     throw new Error(`Could not download image: ${err instanceof Error ? err.message : err}`);
   }
-}
-
-function sniffImage(bytes: Uint8Array): 'jpg' | 'png' | 'webp' | undefined {
-  const at = (i: number) => bytes[i];
-  if (at(0) === 0xff && at(1) === 0xd8 && at(2) === 0xff) return 'jpg';
-  if (at(0) === 0x89 && at(1) === 0x50 && at(2) === 0x4e && at(3) === 0x47) return 'png';
-  const riff = Buffer.from(bytes.subarray(0, 12)).toString('latin1');
-  return riff.startsWith('RIFF') && riff.endsWith('WEBP') ? 'webp' : undefined;
 }
 
 /** Refuses loopback, link-local and private-network hosts so a URL cannot reach the LAN. */

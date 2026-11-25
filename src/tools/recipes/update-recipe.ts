@@ -62,9 +62,25 @@ export const updateRecipe = defineTool({
       .optional()
       .describe('The complete ingredient list'),
     instructions: z
-      .array(z.string())
+      .array(
+        z.union([
+          z.string(),
+          z.object({
+            text: z.string(),
+            photoFrom: z
+              .number()
+              .int()
+              .min(1)
+              .optional()
+              .describe('Keep the photo of this existing step number (from 1), e.g. after an edit'),
+          }),
+        ]),
+      )
       .optional()
-      .describe('The complete step list, one string per step, in order'),
+      .describe(
+        'The complete step list in order. A plain string keeps its photo only if the text is ' +
+          'unchanged; use {text, photoFrom} to keep the photo of an edited or moved step',
+      ),
     notes: z
       .string()
       .max(10240)
@@ -93,13 +109,16 @@ export const updateRecipe = defineTool({
     };
     if (R.isEmpty(edits)) return fail('Nothing to change: pass at least one field to edit');
 
-    // a step photo only carries over when the step text is unchanged
+    const kept = new Set(edits.instructions?.map((s) => s.photo));
     const lostPhotos = instructions
-      ? recipe.instructions.filter((s) => s.photo && !instructions.includes(s.text)).length
+      ? recipe.instructions.filter((s) => s.photo && !kept.has(s.photo)).length
       : 0;
     const warnings =
       lostPhotos > 0
-        ? [`${lostPhotos} step photo(s) will be dropped because their step text changed`]
+        ? [
+            `${lostPhotos} step photo(s) will be dropped because their step text changed; ` +
+              'pass {text, photoFrom: <old step number>} to keep one',
+          ]
         : [];
     if (ingredients && !isDrink(recipe, await client.tags.list())) {
       const unclear = ambiguousOunces(edits.ingredients ?? []);

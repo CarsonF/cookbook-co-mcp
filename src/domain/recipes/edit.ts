@@ -19,10 +19,18 @@ export function toIngredients(inputs: IngredientInput[]): Ingredient[] {
   }));
 }
 
-/** Keeps a step's photo when the same text already existed. */
-export function toInstructions(texts: string[], previous: Instruction[]): Instruction[] {
-  const photos = new Map(previous.map((p) => [p.text, p.photo]));
-  return texts.map((text, n) => ({ id: n, item: n, text, photo: photos.get(text) ?? '' }));
+/** A step as text, or text that keeps the photo of existing step `photoFrom` (counted from 1). */
+export type StepInput = string | { text: string; photoFrom?: number };
+
+/** A plain string keeps its photo only when the same text already existed. */
+export function toInstructions(steps: StepInput[], previous: Instruction[]): Instruction[] {
+  const byText = new Map(previous.map((p) => [p.text, p.photo]));
+  return steps.map((step, n) => {
+    const { text, photoFrom } = typeof step === 'string' ? { text: step } : step;
+    const photo =
+      photoFrom === undefined ? (byText.get(text) ?? '') : (previous[photoFrom - 1]?.photo ?? '');
+    return { id: n, item: n, text, photo };
+  });
 }
 
 /** Plain-text rendering for before/after review, e.g. `2 tbsp olive oil (extra virgin)`. */
