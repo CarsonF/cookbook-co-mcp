@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.3.0](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.2.4...v0.3.0) (2026-11-25)
+
+
+### Features
+
+* view, set and remove recipe step photos ([#24](https://github.com/CarsonF/cookbook-co-mcp/issues/24)) ([9814456](https://github.com/CarsonF/cookbook-co-mcp/commit/9814456410e4665e725ab2c7bf70f742c45d39f5))
+
+
+### Bug Fixes
+
+* load pdf fonts into pdfmake's renamed shared file system ([#26](https://github.com/CarsonF/cookbook-co-mcp/issues/26)) ([8cb686a](https://github.com/CarsonF/cookbook-co-mcp/commit/8cb686a801059df89ab3623ed99336c779c7b0cd))
+
+
+### Dependencies
+
+* bump ([#23](https://github.com/CarsonF/cookbook-co-mcp/issues/23)) ([1e45a7e](https://github.com/CarsonF/cookbook-co-mcp/commit/1e45a7ef63218f220ffc27d0015db167b406c462))
+
 ## [0.2.4](https://github.com/CarsonF/cookbook-co-mcp/compare/v0.2.3...v0.2.4) (2026-11-09)
 
 
