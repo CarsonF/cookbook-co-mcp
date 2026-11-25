@@ -22,9 +22,9 @@ async function configure() {
   const regular = 'NotoSans-Regular.ttf';
   const bold = 'NotoSans-Bold.ttf';
   // the Node entry only reads fonts by name, from disk or its in-memory file system
-  const { virtualfs } = pdfMake as unknown as { virtualfs: VirtualFileSystem };
+  const { sharedVirtualfs } = pdfMake as unknown as { sharedVirtualfs: VirtualFileSystem };
   for (const [name, base64] of Object.entries(FONT_FILES)) {
-    virtualfs.writeFileSync(name, Buffer.from(base64, 'base64'));
+    sharedVirtualfs.writeFileSync(name, Buffer.from(base64, 'base64'));
   }
   // the app's "title" family has no bold file, so headings stay regular weight
   pdfMake.setFonts({
